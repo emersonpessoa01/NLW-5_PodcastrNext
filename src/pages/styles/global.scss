@@ -1,0 +1,66 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+//vARIAVEIS DE CSS
+//https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c4ea48b9-25ef-4267-aa02-f4815e2a3459/server.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210423%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210423T233005Z&X-Amz-Expires=86400&X-Amz-Signature=1837c4c88755194e4b1ca4af3aa4e91d0e007646e6d916f88ca3ec5310d9be6c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22server.json%22
+:root {
+  --white: #fff;
+
+  --gray-50: #f7f8fa;
+  --gray-100: #e6e8eb;
+  --gray-200: #afb2b1;
+  --gray-500: #808080;
+  --gray-800: #494d4b;
+
+  --green-500: #04d361;
+
+  --purple-300: #9f75ff;
+  --purple-400: #9164fa;
+  --purple-500: #8257e5;
+  --purple-800: #6f48c9;
+}
+
+body {
+  background: var(--gray-50);
+}
+body,
+input,
+textarea,
+button {
+  font: 500 1rem Inter, sans-serif;
+  color: var(--gray-500);
+}
+h1,
+h2,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  font-family: Lexend, sans-serif;
+  color: var(--gray-800);
+}
+@media (max-width: 1080px) {
+  html {
+    font-size: 93.75%; //15px px(0,9375*16 =15)
+  }
+}
+@media (max-width: 720px) {
+  html {
+    font-size: 87.5%; //14px px(0,875*16 =14px)
+  }
+}
+
+h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
+
+button {
+  cursor: pointer;
+}
