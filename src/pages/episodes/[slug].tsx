@@ -2,11 +2,12 @@ import Image from "next/image";
 import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import api from "../../service/Api";
 import convertDurationToTimeString from "../../utils/convertDurationToTimeString";
 import Link from "next/link";
 import styles from "./episode.module.scss";
+import { usePlayer } from "../../contexts/PlayerContext";
 
 type Episode = {
   id: string;
@@ -32,6 +33,7 @@ export default function Episode({ episode }: EpisodeProps) {
   // if(router.isFallback){
   //   return <p>Carregando...</p>
   // }
+  const { play } = usePlayer();
   return (
     <div className={styles.episode}>
       <div className={styles.thumbnailContainer}>
@@ -46,7 +48,7 @@ export default function Episode({ episode }: EpisodeProps) {
           src={episode.thumbnail}
           objectFit="cover"
         />
-        <button type="button">
+        <button type="button" onClick={() => play(episode)}>
           <img src="/play.svg" alt="tocar episódio" />
         </button>
       </div>
@@ -75,13 +77,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
     },
   });
 
-  const paths = data.map(episode=>{
-    return{
-      params:{
-        slug: episode.id
-      }
-    }
-  })
+  const paths = data.map((episode) => {
+    return {
+      params: {
+        slug: episode.id,
+      },
+    };
+  });
 
   return {
     // paths: [
@@ -90,7 +92,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     //   },
     // ],
     paths,
-    fallback:"blocking"
+    fallback: "blocking",
   };
 };
 
