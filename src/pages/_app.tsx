@@ -4,11 +4,11 @@ import styles from "../pages/styles/app.module.scss";
 
 import Header from "../components/Header";
 import Player from "../components/Player";
-import { PlayerProviderContext } from "../contexts/PlayerContext";
+import { PlayerContextProvider } from "../contexts/PlayerContext";
 
 function MyApp({ Component, pageProps }) {
-  return(
-    <PlayerProviderContext>
+  return (
+    <PlayerContextProvider>
       <div className={styles.appWrapper}>
         <main>
           <Header />
@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
         </main>
         <Player />
       </div>
-    </PlayerProviderContext>
+    </PlayerContextProvider>
   );
 }
 

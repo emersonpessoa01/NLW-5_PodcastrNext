@@ -24,7 +24,8 @@ type HomeProps = {
 };
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
-  const { playList } = usePlayer()
+
+  const { playList } = usePlayer();
 
   const episodeList = [...latestEpisodes, ...allEpisodes];
 
@@ -103,7 +104,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                     <button
                       type="button"
                       onClick={() =>
-                        playList(episodeList, index + episodeList.length)
+                        playList(episodeList, index + latestEpisodes.length)
                       }
                     >
                       <img src="./play-green.svg" alt="tocar episódio" />

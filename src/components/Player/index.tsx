@@ -43,9 +43,9 @@ export default function Player() {
   function setupProgressListener() {
     audioRef.current.currentTime = 0;
 
-    audioRef.current.addEventListener("timeupdate",()=>{
-      setProgress(audioRef.current.currentTime)
-    })
+    audioRef.current.addEventListener("timeupdate", () => {
+      setProgress(audioRef.current.currentTime);
+    });
   }
 
   return (
@@ -73,7 +73,7 @@ export default function Player() {
           <div className={styles.slider}>
             {episode ? (
               <Slider
-              max={episode.duration}
+                max={episode.duration}
                 trackStyle={{ backgroundColor: "#04d361" }}
                 railStyle={{ backgroundColor: "#9f75ff" }}
                 handleStyle={{ borderColor: "#04d361", borderWidth: 4 }}
