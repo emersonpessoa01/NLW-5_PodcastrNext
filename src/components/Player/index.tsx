@@ -2,10 +2,9 @@ import styles from "./styles.module.scss";
 import { useEffect, useRef, useState } from "react";
 import { usePlayer } from "../../contexts/PlayerContext";
 import Slider from "rc-slider";
-import convertDurationToTimeString from "../../utils/convertDurationToTimeString";
 
 import "rc-slider/assets/index.css";
-// import Image from "next/image";
+import convertDurationToTimeString from "../../utils/convertDurationToTimeString";
 
 export default function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -18,15 +17,15 @@ export default function Player() {
     isLooping,
     isShuffling,
     toggleLoop,
-    toggleShuffle,
     playNext,
     playPrevious,
     togglePlay,
+    toggleShuffle,
     setPlayingState,
     hasNext,
     hasPrevious,
-    clearPlayerState,
   } = usePlayer();
+
   const episode = episodeList[currentEpisodeIndex];
 
   useEffect(() => {
@@ -41,26 +40,12 @@ export default function Player() {
     }
   }, [isPlaying]);
 
-  const setupListenerProgress=()=> {
-    audioRef.current.currentTime = 0
+  function setupProgressListener() {
+    audioRef.current.currentTime = 0;
 
-    audioRef.current.addEventListener("timeupdate",()=>{
-      setProgress(Math.floor(audioRef.current.currentTime))
-    } )
-  }
-
-  const handleSeek =(amount: number)=>{
-    audioRef.current.currentTime = amount
-    setProgress(amount)
-
-  }
-
-  const handleEpisodeEnded=()=>{
-    if(hasNext){
-      playNext()
-    }else{
-      clearPlayerState()
-    }
+    audioRef.current.addEventListener("timeupdate", () => {
+      setProgress(audioRef.current.currentTime);
+    });
   }
 
   return (
@@ -83,14 +68,12 @@ export default function Player() {
       )}
       <footer className={!episode ? styles.empty : ""}>
         <div className={styles.progress}>
-          <span> {convertDurationToTimeString(progress)}</span>
+          <span>{convertDurationToTimeString(progress)}</span>
 
           <div className={styles.slider}>
             {episode ? (
               <Slider
                 max={episode.duration}
-                value={progress}
-                onChange={handleSeek}
                 trackStyle={{ backgroundColor: "#04d361" }}
                 railStyle={{ backgroundColor: "#9f75ff" }}
                 handleStyle={{ borderColor: "#04d361", borderWidth: 4 }}
@@ -106,13 +89,12 @@ export default function Player() {
         {episode && (
           <audio
             src={episode.url}
-            autoPlay
             ref={audioRef}
+            loop={isLooping}
+            autoPlay
             onPlay={() => setPlayingState(true)}
             onPause={() => setPlayingState(false)}
-            onEnded={handleEpisodeEnded}
-            loop={isLooping}
-            onLoadedMetadata={setupListenerProgress}
+            onLoadedMetadata={setupProgressListener}
           />
         )}
 
@@ -128,8 +110,8 @@ export default function Player() {
 
           <button
             type="button"
-            disabled={!episode || hasPrevious}
             onClick={playPrevious}
+            disabled={!episode || !hasPrevious}
           >
             <img src="./play-previous.svg" alt="Tocar anterior" />
           </button>
@@ -149,8 +131,8 @@ export default function Player() {
 
           <button
             type="button"
-            disabled={!episode || hasNext}
             onClick={playNext}
+            disabled={!episode || !hasNext}
           >
             <img src="./play-next.svg" alt="Tocar próximo" />
           </button>
